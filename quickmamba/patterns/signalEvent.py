@@ -1,9 +1,10 @@
 import weakref
 
+
 class Signal(object):
-    '''
+    """
     Simple signal implementation by Thiago Marcos P. Santos (thanks!).
-    '''
+    """
     def __init__(self):
         self.__slots = weakref.WeakValueDictionary()
 
@@ -23,5 +24,3 @@ class Signal(object):
 
     def clear(self):
         self.__slots.clear()
-
-

@@ -1,8 +1,6 @@
 import sys
-sys.path.append("../..")
-
-from PyQt5 import QtCore, QtWidgets, QtQuick
 from quickmamba.models import QObjectListModel
+from PyQt5 import QtCore, QtWidgets, QtQuick
 
 
 class ClipWrapper(QtCore.QObject):

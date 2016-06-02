@@ -3,15 +3,16 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtQuick
 from PyQt5.QtGui import QCursor, QColor, QGuiApplication
 
+
 class ColorPickingEventFilter(QtCore.QObject):
     def __init__(self, screenpicker):
         QtCore.QObject.__init__(self, screenpicker)
         self._screenpicker = screenpicker
 
     def eventFilter(self, obj, event):
-        if(event.type() == QtCore.QEvent.MouseMove):
+        if event.type() == QtCore.QEvent.MouseMove:
             self._screenpicker.updateCurrentColor()
-        elif(event.type() == QtCore.QEvent.MouseButtonRelease):
+        elif event.type() == QtCore.QEvent.MouseButtonRelease:
             self._screenpicker.setGrabbing(False)
             self._screenpicker.accepted.emit()
 
@@ -20,19 +21,15 @@ class ColorPickingEventFilter(QtCore.QObject):
 
 class ColorPicker(QtQuick.QQuickItem):
     """
-        Define the common methods and fields for screenPicker.
+    Define the common methods and fields for screenPicker.
     """
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         QtQuick.QQuickItem.__init__(self, parent)
         self._currentColor = QColor("#FFFFFF")
         self._grabbing = False
         self._desktop = QtWidgets.QDesktopWidget()
         self._colorPickingEventFilter = ColorPickingEventFilter(self)
-
-    # ######################################## Methods private to this class ####################################### #
-
-    # ## Getters ## #
 
     def getCurrentColor(self):
         return self._currentColor
@@ -45,19 +42,19 @@ class ColorPicker(QtQuick.QQuickItem):
         return self._grabbing
 
     def setGrabbing(self, grabbing):
-        if(self._grabbing != grabbing):
-            self._grabbing = grabbing
-            if(self._grabbing):
-                self.installEventFilter(self._colorPickingEventFilter)
-                QGuiApplication.setOverrideCursor(QCursor(QtCore.Qt.CrossCursor))
-                self.grabMouse()
-            else:
-                self.ungrabMouse()
-                self.removeEventFilter(self._colorPickingEventFilter)
-                QGuiApplication.restoreOverrideCursor()
-            self.grabbingChanged.emit()
+        if self._grabbing == grabbing:
+            return
 
-    # ## Others ## #
+        self._grabbing = grabbing
+        if self._grabbing:
+            self.installEventFilter(self._colorPickingEventFilter)
+            QGuiApplication.setOverrideCursor(QCursor(QtCore.Qt.CrossCursor))
+            self.grabMouse()
+        else:
+            self.ungrabMouse()
+            self.removeEventFilter(self._colorPickingEventFilter)
+            QGuiApplication.restoreOverrideCursor()
+        self.grabbingChanged.emit()
 
     def updateCurrentColor(self):
         cursorPos = QCursor.pos()
@@ -67,12 +64,8 @@ class ColorPicker(QtQuick.QQuickItem):
         qColor = QColor(qImage.pixel(0, 0))
         self.setCurrentColor(qColor)
 
-# ############################################# Data exposed to QML ############################################## #
-
     accepted = QtCore.pyqtSignal()
-
     currentColorChanged = QtCore.pyqtSignal()
     currentColor = QtCore.pyqtProperty(QColor, getCurrentColor, setCurrentColor, notify=currentColorChanged)
-
     grabbingChanged = QtCore.pyqtSignal()
     grabbing = QtCore.pyqtProperty(bool, isGrabbing, setGrabbing, notify=grabbingChanged)

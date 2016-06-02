@@ -1,16 +1,8 @@
 import sys
 from PyQt5 import QtCore, QtWidgets, QtQuick
-#Fix execution shader bug
-from OpenGL import GL
-
-
-import os
-
-currentFilePath = os.path.dirname(os.path.abspath(__file__))
-quickmambaPath = os.path.join(currentFilePath, '../QuickMamba')
-sys.path.append(quickmambaPath)
-
+from OpenGL import GL  # Fix execution shader bug
 import quickmamba
+
 
 if __name__ == '__main__':
     quickmamba.qmlRegister()

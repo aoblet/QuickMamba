@@ -5,10 +5,10 @@ import time
 
 
 class ReloadComponent:
-    '''
+    """
     Functor to reload a QML component.
     Will destroy and recreate the component.
-    '''
+    """
     
     def __init__(self, qmlFile, component, topLevelItem):
         self._qmlFile = qmlFile
@@ -26,9 +26,9 @@ class ReloadComponent:
 class ReloadView:
     
     def __init__(self, view):
-        '''
+        """
         Functor to reload a QQuickView.
-        '''
+        """
         self._view = view
     
     def __call__(self):
@@ -37,9 +37,9 @@ class ReloadView:
 
 
 class AskQmlItemToReload:
-    '''
+    """
     Functor to ask the top QML item to reload all the content.
-    '''
+    """
     
     def __init__(self, topLevelItem):
         self._topLevelItem = topLevelItem

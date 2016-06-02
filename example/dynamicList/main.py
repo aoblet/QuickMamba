@@ -1,8 +1,5 @@
 import sys
-sys.path.append("../..")
-
 from quickmamba.models import QObjectListModel
-
 from PyQt5 import QtCore, QtWidgets, QtQuick
 
 

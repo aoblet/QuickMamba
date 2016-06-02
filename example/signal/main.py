@@ -1,7 +1,5 @@
-import sys
-sys.path.append("../..")
-
 from quickmamba.patterns import Signal
+
 
 # Sample usage:
 class Model(object):
@@ -11,7 +9,7 @@ class Model(object):
 
     def set_value(self, value):
         self.__value = value
-        self.changed() # Emit signal
+        self.changed()  # Emit signal
 
     def get_value(self):
         return self.__value

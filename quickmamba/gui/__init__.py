@@ -5,6 +5,7 @@ from .colorPicker import ColorPicker
 
 from PyQt5 import QtQml
 
+
 def qmlRegister():
     QtQml.qmlRegisterType(WheelArea, "QuickMamba", 1, 0, "WheelAreaImpl")
     QtQml.qmlRegisterType(ExternDropArea, "QuickMamba", 1, 0, "ExternDropAreaImpl")
